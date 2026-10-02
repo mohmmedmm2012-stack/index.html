@@ -86,6 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // إضافة حدث النقر لكل زر لفتح النافذة المناسبة
     modalTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
+            const brandCard = trigger.closest('.brand-card');
+            const skinAction = brandCard && Array.from(brandCard.querySelectorAll('.brand-subaction')).find(action =>
+                action.textContent.trim().toLowerCase() === 'skin'
+            );
+
+            if (skinAction && skinContentByBrand[skinAction.dataset.modalTarget]) {
+                showBrandSkinMenu(skinAction.dataset.modalTarget, trigger.textContent.trim(), 'Products');
+                return;
+            }
+
             const modalId = trigger.getAttribute('data-modal-target');
             const modal = document.querySelector(modalId);
             openModal(modal);
@@ -119,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
         skinMenuModal.classList.remove('is-open');
     };
 
-    const showBrandSkinMenu = (modalId, brandName) => {
-        const content = skinContentByBrand[modalId] || [];
+    const showBrandSkinMenu = (modalId, brandName, menuType = 'Skin') => {
+        const content = (skinContentByBrand[modalId] || []).slice(0, 12);
         const modals = content.map(item => {
             const modal = document.createElement('div');
             modal.className = 'modal skin-choice-modal';
@@ -149,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return button;
         }));
 
-        skinMenuModal.querySelector('.skin-menu-title').textContent = `${brandName} - Skin`;
+        skinMenuModal.querySelector('.skin-menu-title').textContent = `${brandName} - ${menuType}`;
         skinMenuModal.classList.add('is-open');
     };
 
