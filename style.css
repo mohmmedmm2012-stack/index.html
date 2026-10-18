@@ -474,6 +474,42 @@ h1::after {
     margin: 20px auto;
 }
 
+.routine-image-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.routine-image-item {
+    position: relative;
+    min-width: 0;
+}
+
+.routine-image-gallery .routine-image-item img {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: 130px;
+    max-height: none;
+    margin: 0;
+    object-fit: contain;
+    background: #fff;
+}
+
+.routine-image-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.68);
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
 
 .video-container {
     position: relative;
@@ -546,5 +582,8 @@ h1::after {
         min-height: 54px;
         padding: 0 13px;
     }
-}
 
+    .routine-image-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
