@@ -11,19 +11,67 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // الحصول على جميع أزرار الإغلاق
     const modalCloses = document.querySelectorAll('.modal-close');
+    const viewHistory = [];
+    let activeView = null;
 
     const closeModal = modal => {
         modal.classList.remove('is-open');
-        document.body.classList.remove('modal-open');
+        if (activeView === modal) {
+            activeView = null;
+            viewHistory.length = 0;
+        }
+        document.body.classList.toggle('modal-open', Boolean(activeView && activeView.classList.contains('modal')));
     };
 
     const normalizeText = text => text.trim().toLocaleLowerCase('ar');
 
-    const openModal = modal => {
-        if (modal) {
-            modal.classList.add('is-open');
-            document.body.classList.add('modal-open');
+    const showView = view => {
+        if (!view || activeView === view) {
+            return;
         }
+
+        if (activeView) {
+            viewHistory.push(activeView);
+            activeView.classList.remove('is-open');
+        }
+
+        activeView = view;
+        activeView.classList.add('is-open');
+        document.body.classList.toggle('modal-open', activeView.classList.contains('modal'));
+    };
+
+    const goBack = () => {
+        if (!activeView) {
+            return;
+        }
+
+        activeView.classList.remove('is-open');
+        activeView = viewHistory.pop() || null;
+        if (activeView) {
+            activeView.classList.add('is-open');
+        }
+        document.body.classList.toggle('modal-open', Boolean(activeView && activeView.classList.contains('modal')));
+    };
+
+    const addBackButton = modal => {
+        const content = modal.querySelector('.modal-content');
+        if (!content || content.querySelector('.modal-back')) {
+            return;
+        }
+
+        const backButton = document.createElement('button');
+        backButton.type = 'button';
+        backButton.className = 'modal-back';
+        backButton.textContent = 'رجوع';
+        backButton.setAttribute('aria-label', 'رجوع إلى الخطوة السابقة');
+        backButton.addEventListener('click', goBack);
+        content.appendChild(backButton);
+    };
+
+    document.querySelectorAll('.modal').forEach(addBackButton);
+
+    const openModal = modal => {
+        showView(modal);
     };
 
     const createSnippet = (text, query) => {
@@ -118,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="skin-menu-panel" role="dialog" aria-modal="true" aria-label="قائمة Skin">
             <div class="skin-menu-header">
                 <h3 class="skin-menu-title">Skin</h3>
+                <button type="button" class="skin-menu-back" aria-label="رجوع إلى الخطوة السابقة">رجوع</button>
                 <button type="button" class="skin-menu-close" aria-label="إغلاق">&times;</button>
             </div>
             <div class="skin-menu-grid"></div>
@@ -127,6 +176,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeSkinMenu = () => {
         skinMenuModal.classList.remove('is-open');
+        if (activeView === skinMenuModal) {
+            activeView = null;
+            viewHistory.length = 0;
+        }
+        document.body.classList.toggle('modal-open', Boolean(activeView && activeView.classList.contains('modal')));
     };
 
     const showBrandSkinMenu = (modalId, brandName, menuType = 'Skin') => {
@@ -142,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             document.body.appendChild(modal);
+            addBackButton(modal);
             modal.querySelector('.modal-close').addEventListener('click', () => closeModal(modal));
             return modal;
         });
@@ -153,16 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
             button.className = 'skin-choice';
             button.textContent = item.title;
             button.addEventListener('click', () => {
-                closeSkinMenu();
                 openModal(modals[index]);
             });
             return button;
         }));
 
         skinMenuModal.querySelector('.skin-menu-title').textContent = `${brandName} - ${menuType}`;
-        skinMenuModal.classList.add('is-open');
+        showView(skinMenuModal);
     };
 
+    skinMenuModal.querySelector('.skin-menu-back').addEventListener('click', goBack);
     skinMenuModal.querySelector('.skin-menu-close').addEventListener('click', closeSkinMenu);
     skinMenuModal.querySelector('.skin-menu-backdrop').addEventListener('click', closeSkinMenu);
 
@@ -202,10 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape') {
-            const openModal = document.querySelector('.modal.is-open');
-            if (openModal) {
-                closeModal(openModal);
-            }
+            goBack();
         }
     });
 });
