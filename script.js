@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const showBrandSkinMenu = (modalId, brandName, menuType = 'Skin') => {
-        const content = (skinContentByBrand[modalId] || []).slice(0, 12);
+        const content = skinContentByBrand[modalId] || [];
         const modals = content.map(item => {
             const modal = document.createElement('div');
             modal.className = 'modal skin-choice-modal';
