@@ -11,6 +11,22 @@
 </head>
 <body>
 
+    <section class="announcement-bar" aria-label="الإعلان">
+        <div class="announcement-window">
+            <div class="announcement-track">
+                <span class="announcement-message">أهلاً بكم في Biotech Brands — اكتشفوا منتجاتنا المميزة</span>
+                <span class="announcement-message" aria-hidden="true">أهلاً بكم في Biotech Brands — اكتشفوا منتجاتنا المميزة</span>
+            </div>
+        </div>
+        <div class="announcement-editor" hidden>
+            <label class="visually-hidden" for="announcement-input">مسابقه SVR فى النهدى من 16 /9 الى 30/11 عند تحقيق الهدف يضاف 8% حافز زياده على الحافز الموجود</label>
+            <input id="announcement-input" type="text" maxlength="240" autocomplete="off">
+            <button class="announcement-save" type="button">حفظ</button>
+            <button class="announcement-cancel" type="button">إلغاء</button>
+        </div>
+        <span class="visually-hidden announcement-status" aria-live="polite"></span>
+    </section>
+
     <main class="container">
         <h1>استكشف البرندات </h1>
         <p>انقر على أي برند للكشف عن التفاصيل الكاملة

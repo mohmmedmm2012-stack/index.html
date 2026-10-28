@@ -1,4 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const announcementMessages = document.querySelectorAll('.announcement-message');
+    const announcementWindow = document.querySelector('.announcement-window');
+    const announcementEdit = document.querySelector('.announcement-edit');
+    const announcementEditor = document.querySelector('.announcement-editor');
+    const announcementInput = document.querySelector('#announcement-input');
+    const announcementSave = document.querySelector('.announcement-save');
+    const announcementCancel = document.querySelector('.announcement-cancel');
+    const announcementStatus = document.querySelector('.announcement-status');
+    const announcementStorageKey = 'biotechBrandsAnnouncement';
+
+    const setAnnouncement = message => {
+        announcementMessages.forEach(element => {
+            element.textContent = message;
+        });
+    };
+
+    try {
+        const savedAnnouncement = localStorage.getItem(announcementStorageKey);
+        if (savedAnnouncement) {
+            setAnnouncement(savedAnnouncement);
+        }
+    } catch (error) {
+        announcementStatus.textContent = 'تعذر تحميل الإعلان المحفوظ.';
+    }
+
+    announcementEdit.addEventListener('click', () => {
+        announcementInput.value = announcementMessages[0].textContent;
+        announcementWindow.hidden = true;
+        announcementEditor.hidden = false;
+        announcementEdit.hidden = true;
+        announcementInput.focus();
+    });
+
+    const closeAnnouncementEditor = () => {
+        announcementWindow.hidden = false;
+        announcementEditor.hidden = true;
+        announcementEdit.hidden = false;
+        announcementStatus.textContent = '';
+        announcementEdit.focus();
+    };
+
+    announcementSave.addEventListener('click', () => {
+        const message = announcementInput.value.trim();
+        if (!message) {
+            announcementStatus.textContent = 'اكتب نص الإعلان أولاً.';
+            announcementInput.focus();
+            return;
+        }
+
+        try {
+            localStorage.setItem(announcementStorageKey, message);
+        } catch (error) {
+            announcementStatus.textContent = 'تعذر حفظ الإعلان في هذا المتصفح.';
+            return;
+        }
+
+        setAnnouncement(message);
+        closeAnnouncementEditor();
+        announcementStatus.textContent = 'تم حفظ الإعلان.';
+    });
+
+    announcementCancel.addEventListener('click', closeAnnouncementEditor);
+    announcementInput.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+            announcementSave.click();
+        } else if (event.key === 'Escape') {
+            closeAnnouncementEditor();
+        }
+    });
+
     // الحصول على جميع الأزرار التي تفتح النوافذ
     const modalTriggers = document.querySelectorAll('.modal-trigger');
     const subActions = document.querySelectorAll('.brand-subaction');
