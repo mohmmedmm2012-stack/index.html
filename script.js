@@ -198,6 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const modals = content.map(item => {
             const modal = document.createElement('div');
             modal.className = 'modal skin-choice-modal';
+            if (modalId === '#modal36') {
+                modal.classList.add('skin-guide-modal');
+            }
             modal.innerHTML = `
                 <div class="modal-content">
                     <span class="modal-close">&times;</span>
