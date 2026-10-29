@@ -261,6 +261,11 @@ h1::after {
     cursor: pointer;
 }
 
+.clear-search[hidden],
+.buttons-container[hidden] {
+    display: none;
+}
+
 .clear-search:hover {
     background: var(--accent-color);
     color: #192832;

@@ -31,7 +31,14 @@
         <h1>استكشف البرندات </h1>
         <p>انقر على أي برند للكشف عن التفاصيل الكاملة
 </p>
-          <p class="search-status" aria-live="polite"></p>
+        <div class="search-panel">
+            <label class="search-label" for="brand-search">ابحث عن علامة تجارية أو منتج</label>
+            <div class="search-box">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input id="brand-search" type="search" placeholder="اكتب اسم العلامة أو المنتج" autocomplete="off">
+                <button class="clear-search" type="button" aria-label="مسح البحث" hidden>&times;</button>
+            </div>
+            <p class="search-status" aria-live="polite"></p>
         </div>
         <div class="search-results" aria-live="polite"></div>
         <div class="buttons-container">
