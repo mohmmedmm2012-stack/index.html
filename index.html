@@ -10,28 +10,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <section class="announcement-bar" aria-label="الإعلان">
-        <div class="announcement-window">
-            <div class="announcement-track">
-                <span class="announcement-message">مسابقه SVR فى النهدى من 16/09 الى 30/11 عند التحقيق الهدف يضاف 8% حافز زياده على الحافز الموجود   </span>
-                <span class="announcement-message" aria-hidden="true">أهلاً بكم في Biotech Brands — اكتشفوا منتجاتنا المميزة</span>
+    <section class="brand-marquee" aria-label="اكتشفوا منتجاتنا">
+        <div class="brand-marquee-window">
+            <div class="brand-marquee-track">
+                <span class="brand-marquee-message">اكتشفوا منتجات العناية بالبشرة والشعر من علاماتنا التجارية المميزة</span>
+                <span class="brand-marquee-message" aria-hidden="true">  </span>
             </div>
         </div>
-        <span class="visually-hidden announcement-status" aria-live="polite"></span>
     </section>
-
+     <br>
+        <section class="brand-marquee" aria-label="اكتشفوا منتجاتنا">
+        <div class="brand-marquee-window">
+            <div class="brand-marquee-track">
+                <span class="brand-marquee-message"> مسابقه SVR فى النهدى من 11/9 الى 30/11 عند التحقيق زياده الحافز 8% على الحافز الموجود</span>
+                <span class="brand-marquee-message" aria-hidden="true">  </span>
+            </div>
+        </div>
+    </section>
     <main class="container">
         <h1>استكشف البرندات </h1>
         <p>انقر على أي برند للكشف عن التفاصيل الكاملة
 </p>
-        <div class="search-panel">
-          <label class="search-label" for="brand-search">ابحث عن منتج</label>
-          <div class="search-box">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="brand-search" type="search" placeholder="" autocomplete="off">
-            <button class="clear-search" type="button" aria-label="مسح البحث" hidden>&times;</button>
-          </div>
           <p class="search-status" aria-live="polite"></p>
         </div>
         <div class="search-results" aria-live="polite"></div>
